@@ -77,6 +77,12 @@ on fs
 
 	insmod /system/vendor/modules/8188eu.ko ifname=wlan0 if2name=p2p0
 
+service_redefine media /system/bin/mediaserver
+    class main
+    user media
+    group audio camera inet net_bt net_bt_admin net_bw_acct drmrpc mediadrm qcom_diag cache
+    ioprio rt 4
+
 # virtual sdcard daemon running as media_rw (1023)
 service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard0 /storage/sdcard0
     class late_start
