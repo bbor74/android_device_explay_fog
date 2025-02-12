@@ -4,6 +4,13 @@ on init
 
 	insmod /nand.ko
 
+	export EXTERNAL_STORAGE /mnt/sdcard
+	mkdir /mnt/sdcard 0000 system system
+	symlink /mnt/sdcard /sdcard
+
+	mkdir /mnt/extsd 0000 system system
+	mkdir /mnt/usbhost1 0000 system system
+	mount debugfs debugfs /sys/kernel/debug
 	mkdir /databk 0700 root  system
 
 on early-fs
