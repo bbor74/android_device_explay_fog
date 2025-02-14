@@ -5,7 +5,7 @@ PRODUCT_RELEASE_NAME := Polaris
 
 # Inherit device configuration
 $(call inherit-product, vendor/cm/config/common_full_tablet_wifionly.mk)
-# $(call inherit-product, frameworks/native/build/tablet-dalvik-heap.mk)
+$(call inherit-product, frameworks/native/build/tablet-dalvik-heap.mk)
 $(call inherit-product, device/explay/fog/device.mk)
 
 # Boot animation
