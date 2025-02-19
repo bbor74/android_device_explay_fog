@@ -64,6 +64,8 @@ TARGET_32_BIT_SURFACEFLINGER := true #use only 32bit lib
 # Workaround for no SYNC support
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
+BOARD_USE_LEGACY_TOUCHSCREEN := true
+
 # TWRP recovery
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 TW_THEME := landscape_mdpi
