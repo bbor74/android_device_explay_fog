@@ -10,3 +10,10 @@
 /dev/block/nandi	/databk             ext4      noatime,nosuid,nodev,nomblk_io_submit,barrier=1	wait,check
 /dev/block/nande	/data		        ext4      noatime,nosuid,nodev,nomblk_io_submit,barrier=1,noauto_da_alloc	wait,check,encryptable=/dev/block/nandi
 
+/devices/virtual/block/nandk             auto   auto    defaults   voldmanaged=sdcard0:auto,nonremovable,noemulatedsd
+
+/devices/platform/sunxi-mmc.0/mmc_host*  auto   auto    defaults   voldmanaged=sdcard1:auto
+/devices/platform/sunxi-mmc.1/mmc_host*  auto   auto    defaults   voldmanaged=sdcard1:auto
+/devices/platform/sunxi-ehci.1/usb*          auto   auto    defaults   voldmanaged=usbdisk0:auto
+/devices/platform/sunxi_hcd_host0/usb*       auto   auto    defaults   voldmanaged=usbdisk0:auto
+/devices/platform/sunxi-ohci.1/usb*          auto   auto    defaults   voldmanaged=usbdisk0:auto

@@ -4,12 +4,26 @@ on init
 
 	insmod /nand.ko
 
-	export EXTERNAL_STORAGE /mnt/sdcard
-	mkdir /mnt/sdcard 0000 system system
-	symlink /mnt/sdcard /sdcard
+	export EXTERNAL_STORAGE /storage/sdcard0
+	export SECONDARY_STORAGE /storage/sdcard1
 
-	mkdir /mnt/extsd 0000 system system
-	mkdir /mnt/usbhost1 0000 system system
+	# Internal SD card
+	mkdir /mnt/media_rw/sdcard0 0700 media_rw media_rw
+	mkdir /storage/sdcard0 0770 root root
+	symlink /storage/sdcard0 /sdcard
+	symlink /storage/sdcard0 /mnt/sdcard
+
+	# External SD card
+	mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
+	mkdir /storage/sdcard1 0770 root root
+	symlink /storage/sdcard1 /extsd
+	symlink /storage/sdcard1 /mnt/extsd
+
+	# USB OTG drive
+	mkdir /mnt/media_rw/usbdisk0 0700 media_rw media_rw
+	mkdir /storage/usbdisk0 0770 root root
+	symlink /storage/usbdisk0 /mnt/usbhost1
+
 	mount debugfs debugfs /sys/kernel/debug
 	mkdir /databk 0700 root  system
 
@@ -66,3 +80,15 @@ service_redefine auditd /system/bin/auditd -k
     class main
     disabled
 
+# virtual sdcard daemon running as media_rw (1023)
+service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard0 /storage/sdcard0
+    class late_start
+    disabled
+
+service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
+    class late_start
+    disabled
+
+service fuse_usbdisk0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usbdisk0 /storage/usbdisk0
+    class late_start
+    disabled
