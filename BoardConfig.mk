@@ -93,3 +93,6 @@ TW_DEVICE_VERSION := by bbor74
 BOARD_HAVE_BLUETOOTH := false
 BOARD_HAVE_BLUETOOTH_BCM := false
 
+# Vold
+TARGET_USE_CUSTOM_LUN_FILE_PATH = "/sys/class/android_usb/android0/f_mass_storage/lun%d/file"
+
