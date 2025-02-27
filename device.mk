@@ -14,6 +14,10 @@ PRODUCT_PACKAGES += \
 	audio.a2dp.default \
 	audio.r_submix.default
 
+# Bluetooth
+PRODUCT_PROPERTY_OVERRIDES += \
+	config.disable_bluetooth=true
+
 # Ramdisk
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/fstab.sun8i:root/fstab.sun8i \
