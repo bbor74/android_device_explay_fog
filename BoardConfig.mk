@@ -58,11 +58,11 @@ TARGET_USERIMAGES_USE_EXT4 := true
 # EGL
 BOARD_EGL_CFG := $(LOCAL_PATH)/_prebuilt/system/lib/egl/egl.cfg
 USE_OPENGL_RENDERER := true
-BOARD_EGL_NEEDS_FNW := true
-TARGET_32_BIT_SURFACEFLINGER := true #use only 32bit lib
+# BOARD_EGL_NEEDS_FNW := true
+# TARGET_32_BIT_SURFACEFLINGER := true #use only 32bit lib
 
 # Workaround for no SYNC support
-TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
+# TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
 BOARD_USE_LEGACY_TOUCHSCREEN := true
 
