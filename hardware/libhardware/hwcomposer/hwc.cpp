@@ -67,21 +67,31 @@ static int hwc_setParameter(struct hwc_composer_device_1* dev, int cmd, int disp
 	int ret = 0;
 	 switch(cmd)
 	{
+#ifdef DISPLAY_CMD_SET3DMODE
 		case DISPLAY_CMD_SET3DMODE:
 			ret = _hwc_device_set_3d_mode(disp, (__display_3d_mode)para0);
 			break;
+#endif
+#ifdef DISPLAY_CMD_SETBACKLIGHTMODE
 		case DISPLAY_CMD_SETBACKLIGHTMODE:
 			ret = _hwc_device_set_backlight_mode(disp, para0);
 			break;
+#endif
+#ifdef DISPLAY_CMD_SETBACKLIGHTDEMOMODE
 		case DISPLAY_CMD_SETBACKLIGHTDEMOMODE:
 			ret = _hwc_device_set_backlight_demomode(disp, para0);
 			break;
+#endif
+#ifdef DISPLAY_CMD_SETDISPLAYENHANCEMODE
 		case DISPLAY_CMD_SETDISPLAYENHANCEMODE:
 			ret = _hwc_device_set_enhancemode(disp, para0);
 			break;
+#endif
+#ifdef DISPLAY_CMD_SETDISPLAYENHANCEDEMOMODE
 		case DISPLAY_CMD_SETDISPLAYENHANCEDEMOMODE:
 			ret = _hwc_device_set_enhancedemomode(disp, para0);
 			break;
+#endif
 		/*
 		case DISPLAY_CMD_SETOUTPUTMODE:
 			ret = _hwc_device_set_output_mode(disp, para0, para1, psPrivateData);
@@ -93,7 +103,6 @@ static int hwc_setParameter(struct hwc_composer_device_1* dev, int cmd, int disp
 
 	return ret;
 }
-
 
 static int hwc_getParameter(struct hwc_composer_device_1* dev, int cmd, int disp,
             int para0, int para1)
@@ -189,9 +198,11 @@ int hwc_prepare(hwc_composer_device_1_t *dev, size_t numDisplays,
             break;
         }
 
-        memcpy(&ctx->frame[disp], &psDisplay->frame, sizeof(hwc_rect_t));
+        // Why to get the rectangle parameters passed in the frame
+        // from surfaceflinger?
+        //memcpy(&ctx->frame[disp], &psDisplay->frame, sizeof(hwc_rect_t));
 
-        if(disp == 1)
+        if(disp == HWC_DISPLAY_EXTERNAL)
         {
             if(!ctx->hdmi_hpd)
             {
@@ -223,11 +234,13 @@ int hwc_prepare(hwc_composer_device_1_t *dev, size_t numDisplays,
     		}
         }
 
+#if SUPPORT_FEATURE_3D
         if(disp == HWC_DISPLAY_EXTERNAL && (ctx->cur_3d_mode[disp] == DISPLAY_3D_LEFT_RIGHT_HDMI || ctx->cur_3d_mode[disp] == DISPLAY_3D_TOP_BOTTOM_HDMI))
         {
             ctx->use_fb[0] = 1;
             forceSoftwareRendering = 1;
         }
+#endif
 
     	if (forceSoftwareRendering)
     	{
@@ -594,8 +607,10 @@ static int hwc_device_open(const struct hw_module_t* module, const char* name,
     
     psHwcDevice->prepare         = hwc_prepare;
     psHwcDevice->set             = hwc_set;
+#if 0 // hwc_getParameter & hwc_getParameter is sunxi specific
     psHwcDevice->setParameter    = hwc_setParameter;
     psHwcDevice->getParameter    = hwc_getParameter;
+#endif
     psHwcDevice->registerProcs   = hwc_register_procs;
     psHwcDevice->eventControl	= hwc_eventControl;
 	psHwcDevice->blank			= hwc_blank;
