@@ -60,6 +60,7 @@ TARGET_HARDWARE_INCLUDE := $(LOCAL_PATH)/hardware/include
 
 # EGL
 BOARD_EGL_CFG := $(LOCAL_PATH)/_prebuilt/system/lib/egl/egl.cfg
+BOARD_EGL_WORKAROUND_BUG_10194508 := true
 USE_OPENGL_RENDERER := true
 # BOARD_EGL_NEEDS_FNW := true
 # TARGET_32_BIT_SURFACEFLINGER := true #use only 32bit lib
