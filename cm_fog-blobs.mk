@@ -41,3 +41,12 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/_prebuilt/system/etc/permissions/tablet_core_hardware.xml:system/etc/permissions/tablet_core_hardware.xml
 
+# Camera
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/_prebuilt/system/etc/camera_cfg/gc0308_front/camera.cfg:system/etc/camera_cfg/gc0308_front/camera.cfg \
+    $(LOCAL_PATH)/_prebuilt/system/etc/camera_cfg/gc0308_front/media_profiles.xml:system/etc/camera_cfg/gc0308_front/media_profiles.xml \
+    $(LOCAL_PATH)/_prebuilt/system/etc/camera_cfg/gc0308_gc0308_double/camera.cfg:system/etc/camera_cfg/gc0308_gc0308_double/camera.cfg \
+    $(LOCAL_PATH)/_prebuilt/system/etc/camera_cfg/gc0308_gc0308_double/media_profiles.xml:system/etc/camera_cfg/gc0308_gc0308_double/media_profiles.xml \
+    $(LOCAL_PATH)/_prebuilt/system/etc/camera_cfg/gc0308_gt2005_double/camera.cfg:system/etc/camera_cfg/gc0308_gt2005_double/camera.cfg \
+    $(LOCAL_PATH)/_prebuilt/system/etc/camera_cfg/gc0308_gt2005_double/media_profiles.xml:system/etc/camera_cfg/gc0308_gt2005_double/media_profiles.xml \
+
