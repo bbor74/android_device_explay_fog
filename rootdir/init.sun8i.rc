@@ -38,6 +38,8 @@ on post-fs-data
 	#mkdir /data/media 0770 media_rw media_rw
 	#mkdir /mnt/media/sdcard 0770 media_rw media_rw
 
+    mkdir /data/gps 771 system system
+
 on fs
 	format_userdata /dev/block/by-name/UDISK Favorite
 	format_userdata /dev/block/by-name/private private

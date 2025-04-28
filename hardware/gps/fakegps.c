@@ -32,6 +32,15 @@
 #include <cutils/properties.h>
 #include <hardware/gps.h>
 
+#define MAX_NAME_LEN 32
+#define CONFIG_LINE_BUFFER_SIZE 100
+#define MAX_LLIST_NAME_LEN 256
+//#define CONF_FILE "/storage/sdcard0/fakegps/gps.cfg"
+#define CONF_FILE "/data/gps/gps.cfg"
+
+float latitude = 0.0f;
+float longitude = 0.0f;
+float altitude = 0.0f;
 
 /*****************************************************************/
 /*****************************************************************/
@@ -65,6 +74,57 @@ static GpsLocation fix = {
     .accuracy = 5,
 };
 
+static int read_int_config_line(char* config_line) {
+	char prm_name[MAX_NAME_LEN];
+	int val;
+	sscanf(config_line, "%s %d\n", prm_name, &val);
+	return val;
+}
+
+static void read_str_config_line(char* config_line, char* val) {
+	char prm_name[MAX_NAME_LEN];
+	sscanf(config_line, "%s %s\n", prm_name, val);
+}
+
+static float read_float_config_line(char* config_line) {
+	char prm_name[MAX_NAME_LEN];
+	float val = 0.0f;
+	sscanf(config_line, "%s %f\n", prm_name, &val);
+	return val;
+}
+///////////
+
+static int read_config_file(char* config_filename) {
+	FILE *fp;
+
+	char buf[CONFIG_LINE_BUFFER_SIZE];
+	if ((fp=fopen(config_filename, "r")) == NULL) {
+		//fprintf(stderr, "Failed to open config file %s", gps_dev);
+         ALOGE("Failed to open config file: %s Error: %s", config_filename, strerror(errno));
+		return EXIT_FAILURE;
+	}
+	while(! feof(fp)) {
+		fgets(buf, CONFIG_LINE_BUFFER_SIZE, fp);
+		if (buf[0] == '#' || strlen(buf) < 4) {
+			continue;
+		}
+		if (strstr(buf, "latitude ")) {
+			latitude = read_float_config_line(buf);
+		}
+		if (strstr(buf, "longitude ")) {
+			longitude = read_float_config_line(buf);
+		}
+		if (strstr(buf, "altitude ")) {
+			altitude = read_float_config_line(buf);
+		}
+	}
+	fclose(fp);
+
+	return EXIT_SUCCESS;
+}
+
+///////////
+
 static float getFloatProperty(const char *propName)
 {
     float res = 0.0f;
@@ -77,9 +137,16 @@ static float getFloatProperty(const char *propName)
 
 static inline void updateFix()
 {
-    fix.latitude = getFloatProperty("hw.fakegps.latitude");
-    fix.longitude = getFloatProperty("hw.fakegps.longitude");
-    fix.altitude = getFloatProperty("hw.fakegps.altitude");
+	if (EXIT_SUCCESS == read_config_file(CONF_FILE)) {
+		ALOGD("success reading configuration");
+		fix.latitude = latitude;
+		fix.longitude = longitude;
+		fix.altitude = altitude;
+	} else {
+		fix.latitude = getFloatProperty("hw.fakegps.latitude");
+		fix.longitude = getFloatProperty("hw.fakegps.longitude");
+		fix.altitude = getFloatProperty("hw.fakegps.altitude");
+	}
     fix.timestamp = (long long)systemTime(SYSTEM_TIME_MONOTONIC);
 
     ALOGD("latitude=%f, longitude=%f, altitude=%f",
