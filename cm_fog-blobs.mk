@@ -53,3 +53,7 @@ PRODUCT_COPY_FILES += \
 #    $(LOCAL_PATH)/_prebuilt/system/etc/camera_cfg/gc0308_gt2005_double/camera.cfg:system/etc/camera_cfg/gc0308_gt2005_double/camera.cfg \
 #    $(LOCAL_PATH)/_prebuilt/system/etc/camera_cfg/gc0308_gt2005_double/media_profiles.xml:system/etc/camera_cfg/gc0308_gt2005_double/media_profiles.xml \
 
+# Lights
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/_prebuilt/system/lib/hw/lights.polaris.so:system/lib/hw/lights.polaris.so \
+
