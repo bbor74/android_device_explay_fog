@@ -51,7 +51,7 @@ on fs
 	insmod /system/vendor/modules/cci.ko
 	insmod /system/vendor/modules/vfe_os.ko
 	insmod /system/vendor/modules/vfe_subdev.ko
-	insmod_modules camera camera
+	insmod_modules camera
 #	insmod /system/vendor/modules/gc0308.ko
 #	insmod /system/vendor/modules/gc2035.ko
 	insmod /system/vendor/modules/vfe_v4l2.ko
@@ -67,6 +67,7 @@ on fs
 	insmod /system/vendor/modules/gt9xxf_ts.ko
 	insmod /system/vendor/modules/sunxi-keyboard.ko
 	insmod /system/vendor/modules/bma250.ko
+	insmod /system/vendor/modules/lsm330_gyr.ko
 
 #insmod usb ethernet
 	insmod /system/vendor/modules/asix.ko
