@@ -118,3 +118,18 @@ CONFIG_DRIVER_NL80211 := y
 
 SW_BOARD_USR_WIFI := rtl8188eu
 BOARD_WLAN_DEVICE := rtl8188eu
+
+# SELinux
+BOARD_SEPOLICY_DIRS += device/explay/fog/sepolicy
+BOARD_SEPOLICY_UNION += \
+    device.te \
+    file_contexts \
+    healthd.te \
+    kernel.te \
+    mediaserver.te \
+    netd.te \
+    surfaceflinger.te \
+    system_server.te \
+    untrusted_app.te \
+    wpa.te
+
